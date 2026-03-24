@@ -6,22 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('calificacions', function (Blueprint $table) {
+        Schema::create('calificaciones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('estudiante_id')->constrained('usuarios')->cascadeOnDelete();
+            $table->foreignId('materia_id')->constrained('materias')->cascadeOnDelete();
+            $table->foreignId('grupo_id')->constrained('grupos')->cascadeOnDelete();
+
+            $table->decimal('parcial1', 5, 2)->nullable();
+            $table->decimal('parcial2', 5, 2)->nullable();
+            $table->decimal('parcial3', 5, 2)->nullable();
+            $table->decimal('promedio', 5, 2)->nullable();
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('calificacions');
+        Schema::dropIfExists('calificaciones');
     }
 };
